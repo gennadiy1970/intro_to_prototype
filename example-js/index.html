@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Наследование</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54="
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h2>Наследование и полиморфизм</h2>
+        <div class="grandfather">
+            <h3>grandfather: {</h3>
+            <ul id="id_grandfather">
+                <li>
+                    <p
+                        data-lastname="Simpson"
+                        data-status="grandfather"
+                    >
+                    lastname:
+                        <span
+                            contenteditable="true"
+                            class="value"
+                        >
+                            "Simpson"
+                        </span>,
+                        <i class="comment">наследование - Simpson</i>
+                    </p>
+                </li>
+                <li>
+                    <p
+                        data-name="Abraham"
+                        data-status="grandfather"
+                    >
+                        name: 
+                        <span
+                            class="value"
+                            contenteditable="true"
+                        >
+                            "Abraham"
+                        </span>,
+                        <i class="comment">полиморфизм - name</i>
+                    </p>
+                </li>
+            </ul>
+            <!-- <p></p> -->
+            <h3>}</h3>
+            <div class="father">
+                <h3>father: {</h3>
+                <ul id="id_father">
+                    <li>
+                        <p
+                            data-lastname="Simpson"
+                            data-status="father"
+                        >
+                            lastname:
+                            <span
+                            contenteditable="true"
+                            class="value"
+                            >
+                                "Simpson"
+                            </span>,
+                            <i class="comment">наследование - Simpson</i>
+                        </p>
+                    </li>
+                    <li>
+                        <p
+                            data-status="father"
+                            data-name="Homer"
+                        >
+                            name: <span class="value" contenteditable="true">"Homer"</span>,
+                            <i class="comment">полиморфизм - name</i>
+                        </p>
+                    </li>
+                    <h3>}</h3>
+                </ul>
+                <div class="son">
+                    <h3>son: {</h3>
+                    <ul id="id_son">
+                        <li>
+                            <p
+                                data-status="son"
+                                data-lastname="Simpson"
+                            >
+                                lastname: 
+                                <span 
+                                    contenteditable="true"
+                                    class="value"
+                                >
+                                    "Simpson"
+                                </span>,
+                                <i class="comment">наследование - Simpson</i>
+                            </p>
+                        </li>
+                        <li>
+                            <p
+                                data-status="son"
+                                data-name="Bart"
+                            >
+                                name: <span class="value" contenteditable="true"
+                                >"Bart"</span>,
+                                <i class="comment">полиморфизм - name</i>
+                            </p>
+                        </li>
+                    </ul>
+                    <h3>}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>

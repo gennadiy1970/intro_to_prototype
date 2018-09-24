@@ -1,0 +1,52 @@
+.wrapper {
+  min-width: 360px;
+  max-width: 960;
+  width: 90%;
+  margin: auto;
+  font-family: sans-serif;
+  font-size: 24px;
+  padding: 2rem 0 0 0;
+  box-shadow: 2px 2px 2px 2px hsla(0, 0%, 0%, 0.2);
+  min-height: 96vh;
+}
+h2 {
+  text-align: center;
+  text-shadow: 2px 2px 2px hsla(0, 0%, 0%, 0.2);
+  cursor: not-allowed;
+}
+h3 {
+  cursor: not-allowed;
+}
+ul {
+  list-style: none;
+}
+
+.grandfather,
+.father,
+.son {
+  width: 90%;
+  margin: auto;
+  min-height: 10rem;
+  padding: 1rem;
+  box-shadow: 2px 2px 2px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+p {
+  color: navy;
+  cursor: not-allowed;
+}
+.value {
+  cursor: text;
+  color: crimson;
+}
+
+.comment {
+  float: right;
+  color: grey;
+}
+.comment::before {
+    content: '/* '
+}
+.comment::after {
+    content: ' */'
+}

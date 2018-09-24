@@ -1,0 +1,37 @@
+.wrapper {
+    min-width: 360px;
+    max-width: 960;
+    width: 90%;
+    margin: auto;
+    font-family: sans-serif;
+    font-size: 24px;
+    padding: 2rem 0 0 0;
+    box-shadow: 2px 2px 2px 2px hsla(0, 0%, 0%, .2);
+    min-height: 96vh;
+}
+label {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    cursor: pointer;
+    text-shadow:  2px 2px 2px hsla(0, 0%, 0%, .2);
+}
+.grandfather,
+.father,
+.son {
+    width: 90%;
+    margin: auto;
+    min-height: 10rem;
+    text-transform: capitalize;
+    padding: 1rem;
+    box-shadow: 2px 2px 2px 2px hsla(0, 0%, 0%, .2);
+}
+input[type="color"] {
+	visibility: hidden;
+}
+
+span {
+    color: grey;
+    font-size: 16px;
+    text-transform: lowercase;
+}

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prototypes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+        <div class="wrapper">
+            <h2>ООП в прототипном стиле</h2>
+        </div>
+        <div class="wrapper">
+            <section>
+            <h4>Prototype</h4>
+            <div class="img-wrp" style="display: flex; justify-content: space-between;">
+                <img src="./img/prototype.png" alt="prototype" style="padding: 1rem; width: 40%;">
+
+                <pre> <code>
+function Son (own) {
+  this.own = own;
+}
+
+Son.prototype
+   .outer = 'Hi';
+
+Son.toString()
+<span class="comment">method of Object</span>
+
+Son instanceof Object
+<span class="comment">true</span>
+
+typeof Object
+<span class="comment">function</span>
+                </code></pre>
+            </div>
+            <ul>
+                <li><b>prototype</b> есть у каждой функции (кроме стрелочных функций)</li>
+                <li><b>prototype</b> это объект</li>
+                <li><b>prototype</b> хранит унаследованные от функций - конструкторов свойства и методы</li>
+                <li><b>prototype</b> хранит свойства и методы для объектов - наследников</li>
+                <li><b>prototype</b> содержит свойство <b>constructor</b></li>
+                <li><b>prototype</b> при использовании <b>в наследовании</b> должно ссылаться на <b>объект</b>, а не на <i>функцию</i></li>
+            </ul>
+            <p>Шаблон использования</p>
+            <details>
+             <summary> <b>общий метод</b></summary>
+            <pre> <code>
+function Family(name) {
+    this.name = name;
+}
+Family.prototype.getName = function () {
+    return this.name;
+}
+
+const first = new Family('First')
+const second = Family Foo('Second')
+first.getName()
+<span class="comment">First</span>
+second.getName()
+<span class="comment">Second</span>
+            </code></pre></details> 
+            <details>
+             <summary><b>общее свойство</b></summary>
+            <pre> <code>
+function Child (name) {
+    this.name = name;
+}
+
+Child.prototype.lastname = 'Simpson';
+
+const bart = new Child('Bart');
+const lise = new Child('Lise');
+bart.lastname;
+<span class="comment"> Simpson</span>
+lise.lastname;
+<span class="comment"> Simpson</span>
+            </code></pre></details>
+            <div class="img-wrp">
+                <img src="./img/lastname.svg" alt="общее свойство">
+            </div>
+
+            <h4>Собственные и наследуемые свойства объекта</h4>
+            <p><b>hasOwnProperty()</b> - вернет <b>true</b> если свойство объекта собственное</p>
+            <p><b>in</b> - вернет <b>true</b> если свойство объекта присутствует среди собственных или в прототипах</p>
+            <details>
+             <summary>in vs hasOwnProperty</summary>
+            <pre> <code>
+function Family (name) {
+    this.name = name;
+}
+Family.prototype.lastname = 'Simpson';
+
+const bart = new Family('Bart');
+
+const keys = [];
+for( let key in bart) {
+    keys.push(key)
+}
+<span class="comment">[name, lastname]</span>
+
+const ownKeys = [];
+for( let key in bart) {
+    if(bart.hasOwnProperty(key))
+    ownKeys.push(key)
+}
+<span class="comment">[name]</span>
+            </code></pre></details>
+            <details>
+             <summary>Object.keys</summary>
+            <pre> <code>
+function Family (name) {
+    this.name = name;
+}
+Family.prototype.lastname = 'Simpson';
+
+const bart = new Family('Bart');
+const result = Object.keys(bart);
+<span class="comment">[name]</span>
+            </code></pre></details>
+            <h4>Расширенный синтаксис для задания свойств объекту</h4>
+            <p><b>Object.defineProperty(obj, prop, descriptor)</b> задает новое или переопределяет имеющееся свойство</p>
+            <p>Этот метод позволяет настроить дополнительные детали свойства:</p>
+            <ul>
+                <li><b>configurable</b> - можно ли удалить свойство из объекта или переопределить его настройки</li>
+                <li><b>enumerable</b> - можно ли увидеть свойство при перечислении (например в <i>for .. in</i>)</li>
+                <li><b>writable</b> - можно ли изменить свойство с помощью оператора <b>=</b> </li>
+                <li><b>value</b> - значение свойства</li>
+            </ul>
+            <pre> <code>
+function Family (name) {
+    this.name = name;
+}
+
+const bart = new Family('Bart');
+Object.defineProperty(bart, 'lastname', {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: 'Simpson'
+  })
+
+const result = Object.entries(bart);
+<span class="comment">[[name,Bart],[lastname,Simpson]]</span>
+            </code></pre>
+           </section>
+            <section>
+            <h4>Функция-конструктор</h4>
+            <ul>
+                <li>любая (не стрелочная) функция может быть конструктором при использовании оператора <b>new</b></li>
+                <li>название конструктора принято задавать с большой буквы</li>
+                <li>оператор <b>instanceof</b> вернет <b>true</b>, если конструктор объекта участвовал в создании этого объекта или прототипа этого объекта
+                    <details>
+                     <summary><b>instanceof</b></summary>
+                    <pre> <code>
+function Foo() {}
+const foo <wbr>&nbsp;= new Foo();
+foo instanceof Foo
+<span class="comment">true</span>
+foo instanceof Object
+<span class="comment">true</span>
+foo instanceof Array
+<span class="comment">false</span>
+</code></pre></details> 
+                </li>
+                <li>оператор <b>new</b> меняет поведение функции при вызове:
+                    <ul>
+                        <li>
+                            <details>
+                             <summary><b>return</b> не возвращает примитивы</summary>
+                            <pre> <code>
+function Foo () {
+    return 1;
+}
+
+const result =&nbsp;Foo();
+result === 1
+<span class="comment">true</span>
+
+typeof result<wbr>&nbsp;===&nbsp;'object'
+<span class="comment">false</span>
+
+const result<wbr>&nbsp=&nbsp;new&nbsp;Foo();
+result === 1
+<span class="comment">false</span>
+
+typeof result<wbr>&nbsp;===&nbsp;'object'
+<span class="comment">true</span></code></pre></details>
+                        </li>
+                        <li>
+                            <details>
+                             <summary><b>return</b> возвращает объекты</summary>
+                            <pre> <code>
+function Foo () {
+    return [1];
+}
+
+const result =&nbsp;Foo();
+result[0] === 1
+<span class="comment">true</span>
+
+typeof result<wbr>&nbsp;===&nbsp;'object'
+<span class="comment">true</span>
+
+Array.isArray(result)
+<span class="comment">true</span>
+
+const result<wbr>&nbsp=&nbsp;new&nbsp;Foo();
+result[0] === 1
+<span class="comment">false</span>
+
+typeof result<wbr>&nbsp;===&nbsp;'object'
+<span class="comment">true</span>
+Array.isArray(result)
+<span class="comment">true</span>
+</code></pre></details>
+                        </li>
+                        <li>
+                            <details>
+                             <summary>способ избежать ошибочного вызова конструктора как функции</summary>
+                            <pre> <code>
+function Foo (name) {
+    this.name = name;
+    if(! (this instanceof Foo)) {
+        return new Foo(name);
+    }
+}
+                            </code></pre></details> 
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <h4>Создание объекта</h4>
+            <pre><code>
+function Son (name) {
+    this.name = name;
+}
+
+Son.prototype.lastname = 'Simpson';
+Son.prototype.getFullName = function () {
+    return `
+ name is ${this.name}
+ lastname is ${this.lastname}
+ `;
+}
+
+const bart = new Son('Bart');
+bart.getFullName();
+<span class="comment">name is Bart
+lastname is Simpson</span>
+
+            </code></pre>
+            <h4>[[Prototype]] объекта</h4>
+            <ul>
+                <li>каждый объект имеет скрытое свойство <b>[[Prototype]]</b></li>
+                <li><b>[[Prototype]]</b> указывает на <b>prototype</b> функции-конструктора </li>
+                <li>запись  в <b>[[Prototype]]</b> происходит в момент создания объекта</li>
+                <li>запись <b>[[Prototype]]</b> при создании осуществляет метод <b>constructor</b> из объекта <i>prototype</i> функции-констркутора</li>
+            </ul>
+            <div class="img-wrp">
+                <img src="./img/obj_prototype.svg" alt="[[Prototype]]">
+            </div>
+            <div class="img-wrp">
+                <img src="./img/lastname_link.svg" alt="[[Prototype]]">
+            </div>
+            <h4>__proto__</h4>
+            <p>[[Prototype]] объекта указывает на <b>prototype</b> функции-констркутора и даже может изменить его с помощью
+            методов, находящихся в собственном свойстве <b>__proto__</b></p>
+            <div class="img-wrp">
+                <img src="./img/__proto__.svg" alt="__proto__">
+            </div>
+            <details>
+             <summary>свойство __proto__ можно использовать как указатель</summary>
+            <pre> <code>
+function Son (name) {
+    this.name = name;
+}
+const bart = new Son('Bart');
+bart.__proto__
+<span class="comment"></span>
+</code></pre></details> 
+            <p>Не рекомендуется использовать метод <b>__proto__</b> для изменения <b>prototype</b></p>
+            <h4>Объект вместо функции-конструктора</h4>
+            <p>Если есть объект, который подходит в качестве основы, то мы можем сделать его копию и добавить новые свойства в синтаксисе <b>Object.defineProperty</b> с помощью <b>Object.create(source, options)</b></p>
+            <details>
+             <summary>Объект-прототип</summary>
+            <pre> <code>
+function Child (name) {
+    this.name = name;
+}
+
+Child.prototype.lastname = 'Simpson';
+
+const bart = new Child('Bart');
+const lise = Object.create(bart, {
+    name: {
+        value: 'Lise',
+        configurable: true,
+        writable: true,
+        enumerable: true
+    }
+});
+lise.name;
+<span class="comment">Lise</span>
+lise.lastname;
+<span class="comment">Simpson</span>
+            </code></pre></details>
+            <details>
+             <summary>Передача свойств другого объекта при копировании</summary>
+            <pre> <code>
+
+            </code></pre></details> 
+            <p>Такой способ позволяет использовать <b>prototype</b> общего конструктора.</p>
+            <p>Так же этот способ позволяет создать наследование, подобное классическому (от слова <b>класс</b>)</p>
+           </section>
+        </div>
+        <div class="wrapper">
+            <section>
+            <h4>Наследование</h4>
+            <p><a href="./example-css/index.html"><b>Пример </b></a> CSS наследования</p>
+            <p><a href="./example-js/index.html"><b>Пример </b></a> как это могло бы работать в JS</p>
+            <details>
+             <summary>Реализация в JS</summary>
+            <pre> <code>
+function Family () {}
+
+Family.prototype.color = 'red';
+const grand = new Family ();
+
+const father = Object.create(grand)
+const son = Object.create(father)
+console.table([
+    ['grand:', grand.color],
+    ['father:',father.color],
+    ['son:', son.color]
+]);
+
+
+father.color = 'orange';
+console.log('============= father.color = "orange" ================');
+console.table([
+    ['grand:', grand.color],
+    ['father:',father.color],
+    ['son:', son.color]
+]);
+
+console.log('============= son.color = "navy" ================');
+son.color= 'navy';
+console.table([
+    ['grand:', grand.color],
+    ['father:',father.color],
+    ['son:', son.color]
+]);
+
+            </code></pre></details>
+            <h4>Аналог классического наследования:</h4>
+            <p>Наследование конструктора - <b>apply(this, arguments)</b> или <b>.call()</b></p>
+            <pre><code>
+function Family (name, age) {
+    this.name = name,
+    this.age = age
+}
+
+function Son (name, age) {
+    Family.apply(this, arguments)
+}
+
+function Father (name, age) {
+    Family.call(this, name, age)
+}
+
+const homer = new Father ('Homer', 36)
+const bart = new Son ('Bart', 10)
+console.table({homer, bart})
+            </code></pre>
+            <p>Наследование <b>prototype</b> и переопределение унаследованного <b>constructor</b> на собственный</p>
+            <pre><code>
+function Family () {}
+Family.prototype.lastname = "Simpson";
+
+function Son () {}
+Son.prototype = Object.create(Family.prototype);
+Son.prototype.constructor = Son;
+            </code></pre>
+            <div class="img-wrp">
+                <img src="./img/prototype-chain.png" alt="">
+            </div>
+            <h4>Примесь и переопределение свойств при наследовании</h4>
+            <p>Пример в файле /example-js/inheritace.js</p>
+            <p>Результат в файле /example-js/res.txt</p>
+           </section>
+            <section>
+            <h4>Цепочка прототипов</h4>
+            <div class="img-wrp">
+                <img src="./img/chain.svg" alt="find property in chain">
+            </div>
+            <p><b>Алгоритм поиска</b> </p>
+            <ol>
+                <li>в <b>собственных свойствах</b> объекта</li>
+                <li>в <b>свойствах prototype</b></li>
+                <li>в свойствах prototype в <b>цепочке prototype</b> </li>
+                <li>в <b>Object.prototype</b></li>
+                <li>переход поиска в <b>null</b> с последующим возвратом <b>undefined</b></li>
+            </ol>
+           </section>
+        </div>
+</body>
+</html>
