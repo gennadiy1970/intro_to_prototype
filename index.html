@@ -296,9 +296,11 @@ Child.prototype.lastname = 'Simpson';
 const bart = new Child('Bart');
 const lise = Object.create(bart);
 lise.name = 'Lise';
+lise instanceof Child;
 <span class="comment">Lise</span>
 lise.lastname;
 <span class="comment">Simpson</span>
+<span class="comment">true</span>
             </code></pre></details>
             <details>
              <summary>Передача свойств другого объекта при копировании</summary>
