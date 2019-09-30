@@ -283,7 +283,7 @@ bart.__proto__
 </code></pre></details> 
             <p>Не рекомендуется использовать метод <b>__proto__</b> для изменения <b>prototype</b></p>
             <h4>Объект вместо функции-конструктора</h4>
-            <p>Если есть объект, который подходит в качестве основы, то мы можем сделать его копию и добавить новые свойства в синтаксисе <b>Object.defineProperty</b> с помощью <b>Object.create(source, options)</b></p>
+            <p>Если есть объект, который подходит в качестве основы, то мы можем сделать его копию и добавить новые свойства и методы с помощью <b>Object.create(source, options)</b></p>
             <details>
              <summary>Объект-прототип</summary>
             <pre> <code>
@@ -294,15 +294,8 @@ function Child (name) {
 Child.prototype.lastname = 'Simpson';
 
 const bart = new Child('Bart');
-const lise = Object.create(bart, {
-    name: {
-        value: 'Lise',
-        configurable: true,
-        writable: true,
-        enumerable: true
-    }
-});
-lise.name;
+const lise = Object.create(bart);
+lise.name = 'Lise';
 <span class="comment">Lise</span>
 lise.lastname;
 <span class="comment">Simpson</span>
