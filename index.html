@@ -305,7 +305,19 @@ lise instanceof Child;
             <details>
              <summary>Передача свойств другого объекта при копировании</summary>
             <pre> <code>
+function Child (name) {
+    this.name = name;
+}
 
+Child.prototype.lastname = 'Simpson';
+
+const bart = new Child('Bart');
+bart.parent = ['Homer', 'Marge'];
+
+const lise = Object.create(bart);
+lise.name = 'Lise';
+lise.parent
+<span class="comment">['Homer', 'Marge']</span>
             </code></pre></details> 
             <p>Такой способ позволяет использовать <b>prototype</b> общего конструктора.</p>
             <p>Так же этот способ позволяет создать наследование, подобное классическому (от слова <b>класс</b>)</p>
