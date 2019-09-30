@@ -282,8 +282,10 @@ bart.__proto__
 <span class="comment"></span>
 </code></pre></details> 
             <p>Не рекомендуется использовать метод <b>__proto__</b> для изменения <b>prototype</b></p>
-            <h4>Объект вместо функции-конструктора</h4>
-            <p>Если есть объект, который подходит в качестве основы, то мы можем сделать его копию и добавить новые свойства и методы с помощью <b>Object.create(source, options)</b></p>
+             <h4>Объект вместо функции-конструктора</h4>
+            <p>Если есть объект, который подходит в качестве основы, то мы можем сделать его копию и добавить 
+новые свойства и методы с помощью <b>Object.create(source, options)</b>
+            </p>
             <details>
              <summary>Объект-прототип</summary>
             <pre> <code>
@@ -296,6 +298,33 @@ Child.prototype.lastname = 'Simpson';
 const bart = new Child('Bart');
 const lise = Object.create(bart);
 lise.name = 'Lise';
+<span class="comment">Lise</span>
+lise.lastname;
+<span class="comment">Simpson</span>
+lise instanceof Child;
+<span class="comment">true</span>
+            </code></pre></details>
+            <p>Важно запомнить, что options не обязательный параметр, но если он используется, 
+то с использованием синтаксиса <b>Object.defineProperties()</b></p>
+            <details>
+             <summary>Использование optrions</summary>
+            <pre> <code>
+function Child (name) {
+    this.name = name;
+}
+
+Child.prototype.lastname = 'Simpson';
+
+const bart = new Child('Bart');
+const lise = Object.create(bart,(
+ {
+    name: {
+      value: 'Lise',
+      writable: true
+    }
+ }
+));
+lise.name;
 <span class="comment">Lise</span>
 lise.lastname;
 <span class="comment">Simpson</span>
